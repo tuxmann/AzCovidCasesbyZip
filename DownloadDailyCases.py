@@ -36,7 +36,7 @@ def GetNewCases():
 while True:
     current_time = (datetime.datetime.now()).strftime("%H")
     hour = current_time
-    date = datetime.date.today())
+    date = datetime.date.today()
 
     if hour != old_hour:
         old_hour = hour
