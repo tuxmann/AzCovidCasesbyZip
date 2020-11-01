@@ -11,7 +11,7 @@ from pathlib import Path
 #repo_dir = 'AzCovidCasesbyZip'
 #repo = Repo(repo_dir)
 #commit_message = "Upload new xls file"
-date = datetime.date.today())
+date = datetime.date.today()
 time_to_get_file = datetime.time(12).strftime("%H") # 24-hour clock req'd, only hour needed
 url = "https://adhsgis.maps.arcgis.com/sharing/rest/content/items/8a2c089c866940bbac0ee70a41ea27bd/data"
 
