@@ -2,19 +2,36 @@
 # Change the name of the file to the date.
 # Oct 20, 2020
 # https://adhsgis.maps.arcgis.com/sharing/rest/content/items/8a2c089c866940bbac0ee70a41ea27bd/data
-# https://adhsgis.maps.arcgis.com/sharing/rest/content/items/8a2c089c866940bbac0ee70a41ea27bd/data
+#
+# TODO: Automatically upload files to Github.
+import datetime, filecmp, time, wget
+from pathlib import Path
+#from git import Repo
 
-import datetime, time, wget
-
+#repo_dir = 'AzCovidCasesbyZip'
+#repo = Repo(repo_dir)
+#commit_message = "Upload new xls file"
 date = str(datetime.date.today())
 time_to_get_file = datetime.time(12).strftime("%H") # 24-hour clock req'd, only hour needed
 url = "https://adhsgis.maps.arcgis.com/sharing/rest/content/items/8a2c089c866940bbac0ee70a41ea27bd/data"
 
-wget.download(url, date+".xls")
-print("\nGetting file: " + date+".xls")
+#wget.download(url, date+".xls")
+#print("\nGetting file: " + date+".xls")
 downloaded_file = True      # False means that the file hasn't been DL'd today.
 old_date = ""
 old_hour = ""
+
+def GetNewCases():
+    print("\nGetting file: " + date+".xls")
+    wget.download(url, date+".xls")
+    yesterday = date - datetime.timedelta(days=1)
+    file_size = Path(date+".xls").stat().st_size
+    test = filecmp.cmp(date+'.xls', yesterday+'.xls')
+    if file_size < 20000:
+        print("                              WARNING!!!! File is smaller than expected!\n"*10)
+    if test == True:
+        print("                              PROBLEM!!!! File has not changed!\n"*10)
+
 
 while True:
     current_time = (datetime.datetime.now()).strftime("%H")
@@ -26,8 +43,7 @@ while True:
         print ("Current hour is : " + hour)
 
     if downloaded_file == False and time_to_get_file == current_time:
-        wget.download(url, date+".xls")
-        print("\nGetting file: " + date+".xls")
+        GetNewCases()
         downloaded_file = True
     elif old_date != date:
         downloaded_file = False
