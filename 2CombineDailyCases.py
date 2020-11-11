@@ -16,29 +16,31 @@
 #
 # Resources:
 # https://blogs.harvard.edu/rprasad/2014/06/16/reading-excel-with-python-xlrd/
-# https://realpython.com/python-csv/
+# https://realpython.com/learning-paths/pandas-data-science/
 # https://realpython.com/pandas-read-write-files/
 # https://xlrd.readthedocs.io/en/latest/api.html
 
 import csv, glob, xlrd
+import pandas as pd
 from xlrd.sheet import ctype_text 
 
 daily_case_files = sorted((glob.glob('./*.xls')))
+master_df = pd.DataFrame()
+count = 0
 
-
+# Get the zipcode:cases & put it in a dictionary and build the DF
 for file in daily_case_files:
-	print(file)
-	xlwb = xlrd.open_workbook(file)
-	xlsh = xlwb.sheet_by_index(0)
-	headers = xlsh.row(0)
-	print('(Column #) type:value')
-	for idx, cell_obj in enumerate(headers):
-		cell_type_str = ctype_text.get(cell_obj.ctype, 'unknown type')
-		print('(%s) %s %s' % (idx, cell_type_str, cell_obj.value))
-		if "POSTCODE" in cell_obj.value:
-			zipcode_col = idx
-			print("Zip found")
-		elif "ConfirmedCaseCount" in cell_obj.value:
-			CaseCount_col = idx
-		else:
-			continue
+	fname = (((str(file)).split('\\')[1]).split('.')[0])
+	df = pd.read_excel(file)
+	ZipCaseDict = dict(zip(df.POSTCODE, df.ConfirmedCaseCount))
+	if count == 0:
+		master_df = pd.DataFrame(zip(df.POSTCODE, df.ConfirmedCaseCount))
+		master_df = master_df.rename(columns={0:'ZipCode',1:fname})
+		print(master_df)
+		count += 1
+	else:
+		master_df[fname] = master_df['ZipCode'].map(ZipCaseDict)
+		count += 1
+
+print(master_df)
+master_df.to_csv('master_cases.csv')
