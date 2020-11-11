@@ -1,0 +1,4 @@
+Includes the zip codes for each city. 2010 census Pops for each zip code. 
+Also has Zip codes for each county as well. 
+	https://www.zip-codes.com/city/az-phoenix.asp
+
