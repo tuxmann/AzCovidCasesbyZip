@@ -30,7 +30,8 @@ count = 0
 
 # Get the zipcode:cases & put it in a dictionary and build the DF
 for file in daily_case_files:
-	fname = (((str(file)).split('\\')[1]).split('.')[0])
+	fname = (((str(file)).split('/')[1]).split('.')[0]) # For LINUX
+	fname = (((str(file)).split('\\')[1]).split('.')[0]) # For WINDOWS
 	df = pd.read_excel(file)
 	ZipCaseDict = dict(zip(df.POSTCODE, df.ConfirmedCaseCount))
 	if count == 0:
