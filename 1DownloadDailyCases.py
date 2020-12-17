@@ -42,7 +42,7 @@ for line in fhand:
 # git push origin main
 msg = "auto_upload"
 #gitcmd = subprocess.Popen(["git", "pull"])
-gitcmd = subprocess.Popen(["git", "add", "."])
+gitcmd = subprocess.Popen(["git", "add", "--all"])
 gitcmd = subprocess.Popen(["git", "commit", "-m", msg])
 gitcmd = subprocess.Popen(["git", "push", "origin", "main"],
 							stdin =subprocess.PIPE,
