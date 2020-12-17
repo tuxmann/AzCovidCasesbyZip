@@ -47,19 +47,20 @@ def Upload2Git():
 	gitcmd = subprocess.Popen(["git", "commit", "-m", msg])
 	gitcmd = subprocess.Popen(["git", "push", "origin", "main"],
 								stdin =subprocess.PIPE,
-								stdout=subprocess.DEVNULL,
+								stdout=subprocess.PIPE,
 								stderr=subprocess.PIPE,
 								universal_newlines=True,
 								bufsize=0)
 	print("\n\n")
-	gitcmd.stdin.write(username + "\r\n")
+	gitcmd.stdin.write(username + "\n")
 	print("\n\n")
-	gitcmd.stdin.write(password + "\r\n")
+	gitcmd.stdin.write(password + "\n")
 	print("\n\n")
 #for line in gitcmd.stdout:
 #    print(line.strip())
 
 Upload2Git()
+print ("\n\n")
 quit()
 
 
