@@ -22,7 +22,7 @@ old_date = ""
 old_hour = ""
 
 # Get the username & password from the text file. 
-fhand = open("userpass.txt")
+fhand = open("../userpass.txt")
 count = 0
 for line in fhand:
 	count += 1
@@ -35,11 +35,14 @@ for line in fhand:
 		continue
 print(username, password)
 
+fname = "2020-12-10.xls"
 # git add .
 # git commit -m 2020-12-06a.xls
 # git push origin main
 
-gitcmd = subprocess.Popen(["git commit -m " 
+gitcmd = subprocess.Popen(["git", "add", "."])
+gitcmd = subprocess.Popen(["git", "commit", " -m " + fname])
+gitcmd = subprocess.Popen(["git", 
 
 quit()
 def GetNewCases():
