@@ -60,7 +60,6 @@ def Upload2Git():
 #    print(line.strip())
 
 Upload2Git()
-print ("\n\n")
 quit()
 
 
