@@ -4,7 +4,7 @@
 # https://adhsgis.maps.arcgis.com/sharing/rest/content/items/8a2c089c866940bbac0ee70a41ea27bd/data
 #
 # TODO: Automatically upload files to Github.
-import datetime, filecmp, time, wget
+import datetime, filecmp, subprocess, time, wget
 from pathlib import Path
 #from git import Repo
 
@@ -21,6 +21,27 @@ downloaded_file = True      # False means that the file hasn't been DL'd today.
 old_date = ""
 old_hour = ""
 
+# Get the username & password from the text file. 
+fhand = open("userpass.txt")
+count = 0
+for line in fhand:
+	count += 1
+	line = (line.split(" "))[1].rstrip()
+	if count == 1:
+		username = line
+	if count == 2:
+		password = line
+	else: 
+		continue
+print(username, password)
+
+# git add .
+# git commit -m 2020-12-06a.xls
+# git push origin main
+
+gitcmd = subprocess.Popen(["git commit -m " 
+
+quit()
 def GetNewCases():
 	print("\nGetting file: " + str(date)+".xls")
 	wget.download(url, str(date)+".xls")
