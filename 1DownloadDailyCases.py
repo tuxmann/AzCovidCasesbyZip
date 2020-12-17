@@ -22,7 +22,8 @@ old_date = ""
 old_hour = ""
 
 # Get the username & password from the text file. 
-fhand = open("../userpass.txt")
+print("Uploading files to Github!")
+fhand = open("../git-userpass.txt")
 count = 0
 for line in fhand:
 	count += 1
@@ -33,18 +34,33 @@ for line in fhand:
 		password = line
 	else: 
 		continue
-print(username, password)
 
-fname = "2020-12-10.xls"
+# Basic git terminal actions.
 # git add .
+# git pull
 # git commit -m 2020-12-06a.xls
 # git push origin main
-
+msg = "auto_upload"
+#gitcmd = subprocess.Popen(["git", "pull"])
 gitcmd = subprocess.Popen(["git", "add", "."])
-gitcmd = subprocess.Popen(["git", "commit", " -m " + fname])
-gitcmd = subprocess.Popen(["git", 
+gitcmd = subprocess.Popen(["git", "commit", "-m", msg])
+gitcmd = subprocess.Popen(["git", "push", "origin", "main"],
+							stdin =subprocess.PIPE,
+							stdout=subprocess.PIPE,
+							stderr=subprocess.PIPE,
+							universal_newlines=True,
+							bufsize=0)
+print("\n\n")
+gitcmd.stdin.write(username + "\r\n")
+print("\n\n")
+gitcmd.stdin.write(password + "\r\n")
+print("\n\n")
+#for line in gitcmd.stdout:
+#    print(line.strip())
 
 quit()
+
+
 def GetNewCases():
 	print("\nGetting file: " + str(date)+".xls")
 	wget.download(url, str(date)+".xls")
